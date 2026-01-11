@@ -99,3 +99,17 @@ export interface ChatFolder {
   id: string;
   name: string;
 }
+
+export interface Notification {
+  id: string;
+  title: string;
+  message: string;
+  type: 'info' | 'warning' | 'success' | 'error';
+  read: boolean;
+  createdAt: string;
+  priority: 'low' | 'medium' | 'high';
+}
+
+export interface EmployeeWithNotifications extends Employee {
+  unreadNotifications: number;
+}

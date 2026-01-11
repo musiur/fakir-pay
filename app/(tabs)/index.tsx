@@ -1,14 +1,14 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import {
-  AlertTriangle,
-  Book,
-  Calendar,
-  Clock,
-  CreditCard,
-  FileText,
-  MessageSquare,
-  User,
+    AlertTriangle,
+    Book,
+    Calendar,
+    Clock,
+    CreditCard,
+    FileText,
+    MessageSquare,
+    User,
 } from "lucide-react-native";
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
@@ -47,57 +47,65 @@ export default function DashboardScreen() {
       </View>
 
       <View style={styles.grid}>
-        <QuickTile
-          icon={Book}
-          title="Knowledge Base"
-          caption="SOPs & Docs"
-          color={Colors.brand.light}
-          onPress={() => router.push("/(tabs)/kb")}
-        />
-        <QuickTile
-          icon={Clock}
-          title="Attendance"
-          caption="Clock in/out"
-          color={Colors.brand.light}
-          onPress={() => router.push("/(tabs)/attendance")}
-        />
-        <QuickTile
-          icon={Calendar}
-          title="Leave"
-          caption="Apply / Balance"
-          onPress={() => router.push("/leave")}
-        />
-        <QuickTile
-          icon={CreditCard}
-          title="Payroll"
-          caption="Payslips"
-          onPress={() => router.push("/leave")}
-        />
-        <QuickTile
-          icon={MessageSquare}
-          title="ask FFL"
-          caption="AI Chatbot"
-          onPress={() => router.push("/(tabs)/ai")}
-        />
-        <QuickTile
-          icon={FileText}
-          title="E-Sign"
-          caption="Sign & Approvals"
-          onPress={() => router.push("/(tabs)/esign")}
-        />
-        <QuickTile
-          icon={AlertTriangle}
-          title="Complaints"
-          caption="Report Issues"
-          color="#ef4444"
-          onPress={() => router.push("/complaints")}
-        />
-        <QuickTile
-          icon={User}
-          title="Profile"
-          caption="Personal Info"
-          onPress={() => router.push("/(tabs)/profile")}
-        />
+        <View style={styles.gridRow}>
+          <QuickTile
+            icon={Book}
+            title="Knowledge Base"
+            caption="SOPs & Docs"
+            color={Colors.brand.light}
+            onPress={() => router.push("/(tabs)/kb")}
+          />
+          <QuickTile
+            icon={Clock}
+            title="Attendance"
+            caption="Clock in/out"
+            color={Colors.brand.light}
+            onPress={() => router.push("/(tabs)/attendance")}
+          />
+        </View>
+        <View style={styles.gridRow}>
+          <QuickTile
+            icon={Calendar}
+            title="Leave"
+            caption="Apply / Balance"
+            onPress={() => router.push("/leave")}
+          />
+          <QuickTile
+            icon={CreditCard}
+            title="Payroll"
+            caption="Payslips"
+            onPress={() => router.push("/leave")}
+          />
+        </View>
+        <View style={styles.gridRow}>
+          <QuickTile
+            icon={MessageSquare}
+            title="ask FFL"
+            caption="AI Chatbot"
+            onPress={() => router.push("/(tabs)/ai")}
+          />
+          <QuickTile
+            icon={FileText}
+            title="E-Sign"
+            caption="Sign & Approvals"
+            onPress={() => router.push("/(tabs)/esign")}
+          />
+        </View>
+        <View style={styles.gridRow}>
+          <QuickTile
+            icon={AlertTriangle}
+            title="Complaints"
+            caption="Report Issues"
+            color="#ef4444"
+            onPress={() => router.push("/complaints")}
+          />
+          <QuickTile
+            icon={User}
+            title="Profile"
+            caption="Personal Info"
+            onPress={() => router.push("/(tabs)/profile")}
+          />
+        </View>
       </View>
     </ScrollView>
   );
@@ -159,6 +167,10 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   grid: {
+    gap: 14,
+  },
+  gridRow: {
+    flexDirection: "row",
     gap: 14,
   },
 });

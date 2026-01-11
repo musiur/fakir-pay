@@ -1,15 +1,29 @@
 import { Tabs } from "expo-router";
 import {
-  Book,
-  Clock,
-  FileText,
-  Home,
-  MessageSquare,
-  User,
+    Bell,
+    Book,
+    Clock,
+    FileText,
+    Home,
+    MessageSquare,
+    User,
 } from "lucide-react-native";
+import React from "react";
+import { TouchableOpacity } from "react-native";
+import { NotificationBadge } from "../../components/NotificationBadge";
 import { Colors } from "../../constants/Colors";
+import { useNotifications } from "../../hooks/useNotifications";
 
 export default function TabsLayout() {
+  const { unreadCount } = useNotifications();
+
+  const NotificationButton = () => (
+    <TouchableOpacity style={{ position: 'relative', marginRight: 16 }}>
+      <Bell size={24} color={Colors.slate[200]} />
+      <NotificationBadge count={unreadCount} />
+    </TouchableOpacity>
+  );
+
   return (
     <Tabs
       screenOptions={{
@@ -42,7 +56,8 @@ export default function TabsLayout() {
         name="index"
         options={{
           title: "Home",
-          headerTitle: "Dashboard",
+          headerTitle: "FakirPay Dashboard",
+          headerRight: () => <NotificationButton />,
           tabBarIcon: ({ color, size }) => <Home size={size} color={color} />,
         }}
       />

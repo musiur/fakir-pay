@@ -1,10 +1,11 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Colors } from "../constants/Colors";
+import { NotificationProvider } from "../hooks/useNotifications";
 
 export default function RootLayout() {
   return (
-    <>
+    <NotificationProvider>
       <StatusBar style="light" />
       <Stack
         screenOptions={{
@@ -36,6 +37,6 @@ export default function RootLayout() {
           }}
         />
       </Stack>
-    </>
+    </NotificationProvider>
   );
 }

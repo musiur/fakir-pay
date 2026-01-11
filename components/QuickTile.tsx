@@ -47,6 +47,7 @@ export const QuickTile: React.FC<QuickTileProps> = ({
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     borderRadius: 16,
     borderWidth: 1,
     borderColor: Colors.neutral[800],
