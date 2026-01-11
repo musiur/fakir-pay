@@ -35,6 +35,18 @@ export interface AttendanceRecord {
   clockIn: string;
   clockOut: string;
   late: boolean;
+  location?: {
+    coordinates: {
+      latitude: number;
+      longitude: number;
+    };
+    accuracy: number;
+    source: 'gps' | 'network' | 'beacon' | 'cached';
+    isWithinGeofence: boolean;
+  };
+  authenticationType?: 'biometric' | 'pin' | 'manual';
+  isOfflineRecord?: boolean;
+  syncStatus?: 'synced' | 'pending' | 'failed';
 }
 
 export interface ESignDocument {
@@ -112,4 +124,101 @@ export interface Notification {
 
 export interface EmployeeWithNotifications extends Employee {
   unreadNotifications: number;
+}
+// Enhanced Attendance Record for new system
+export interface EnhancedAttendanceRecord {
+  id: string;
+  employeeId: string;
+  date: Date;
+  clockInTime?: Date;
+  clockOutTime?: Date;
+  location: LocationData;
+  authenticationType: 'biometric' | 'pin' | 'manual';
+  status: 'present' | 'absent' | 'late' | 'early_departure';
+  workingHours?: number;
+  isOfflineRecord: boolean;
+  syncStatus: 'synced' | 'pending' | 'failed';
+  metadata: {
+    deviceId: string;
+    appVersion: string;
+    locationAccuracy: number;
+    biometricType?: string;
+  };
+}
+
+export interface LocationData {
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
+  accuracy: number;
+  timestamp: Date;
+  source: 'gps' | 'network' | 'beacon' | 'cached';
+  isWithinGeofence: boolean;
+  distanceFromCenter?: number;
+}
+
+// QS Request types
+export interface QSRequest {
+  id: string;
+  employeeId: string;
+  type: 'attendance_correction' | 'time_adjustment' | 'manual_entry';
+  requestDate: Date;
+  targetDate: Date;
+  originalClockIn?: Date;
+  originalClockOut?: Date;
+  requestedClockIn?: Date;
+  requestedClockOut?: Date;
+  reason: string;
+  attachments: DocumentAttachment[];
+  status: 'pending' | 'approved' | 'rejected' | 'requires_info';
+  workflowSteps: WorkflowStep[];
+  auditTrail: AuditEntry[];
+}
+
+export interface WorkflowStep {
+  id: string;
+  approverName: string;
+  approverRole: string;
+  status: 'pending' | 'approved' | 'rejected';
+  timestamp?: Date;
+  comments?: string;
+}
+
+export interface AuditEntry {
+  id: string;
+  action: string;
+  performedBy: string;
+  timestamp: Date;
+  details: string;
+}
+
+export interface DocumentAttachment {
+  id: string;
+  name: string;
+  type: string;
+  size: number;
+  url: string;
+}
+
+// Movement Request types
+export interface MovementRequest {
+  id: string;
+  employeeId: string;
+  date: Date;
+  departureTime: Date;
+  expectedReturnTime: Date;
+  actualReturnTime?: Date;
+  destination: string;
+  purpose: string;
+  status: 'pending' | 'approved' | 'active' | 'completed' | 'overdue';
+  route: RoutePoint[];
+  estimatedTravelTime: number;
+  actualTravelTime?: number;
+}
+
+export interface RoutePoint {
+  latitude: number;
+  longitude: number;
+  timestamp: Date;
 }
