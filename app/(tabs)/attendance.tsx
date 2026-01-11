@@ -18,7 +18,9 @@ import {
   TouchableOpacity,
   View
 } from "react-native";
+import DatePicker from "../../components/DatePicker";
 import { StatusPill } from "../../components/StatusPill";
+import TimePicker from "../../components/TimePicker";
 import { Colors } from "../../constants/Colors";
 import { ATTENDANCE_HISTORY } from "../../constants/Data";
 import { AttendanceRecord } from "../../types";
@@ -450,41 +452,29 @@ export default function AttendanceScreen() {
           <ScrollView style={styles.modalContent}>
             <View style={styles.formGroup}>
               <Text style={styles.formLabel}>Date</Text>
-              <TextInput
-                style={styles.formInput}
-                placeholder="YYYY-MM-DD"
-                placeholderTextColor={Colors.slate[500]}
+              <DatePicker
                 value={qsForm.date}
-                onChangeText={(text) => setQSForm({...qsForm, date: text})}
+                onDateChange={(date) => setQSForm({...qsForm, date: date})}
+                placeholder="Select date"
               />
             </View>
 
             <View style={styles.formGroup}>
               <Text style={styles.formLabel}>Clock In Time</Text>
-              <View style={styles.timeInput}>
-                <Text style={styles.timeIcon}>🕐</Text>
-                <TextInput
-                  style={styles.timeInputField}
-                  placeholder="Select time"
-                  placeholderTextColor={Colors.slate[500]}
-                  value={qsForm.clockIn}
-                  onChangeText={(text) => setQSForm({...qsForm, clockIn: text})}
-                />
-              </View>
+              <TimePicker
+                value={qsForm.clockIn}
+                onTimeChange={(time) => setQSForm({...qsForm, clockIn: time})}
+                placeholder="Select clock in time"
+              />
             </View>
 
             <View style={styles.formGroup}>
               <Text style={styles.formLabel}>Clock Out Time</Text>
-              <View style={styles.timeInput}>
-                <Text style={styles.timeIcon}>🕐</Text>
-                <TextInput
-                  style={styles.timeInputField}
-                  placeholder="Select time"
-                  placeholderTextColor={Colors.slate[500]}
-                  value={qsForm.clockOut}
-                  onChangeText={(text) => setQSForm({...qsForm, clockOut: text})}
-                />
-              </View>
+              <TimePicker
+                value={qsForm.clockOut}
+                onTimeChange={(time) => setQSForm({...qsForm, clockOut: time})}
+                placeholder="Select clock out time"
+              />
             </View>
 
             <View style={styles.formGroup}>
@@ -538,44 +528,30 @@ export default function AttendanceScreen() {
           <ScrollView style={styles.modalContent}>
             <View style={styles.formGroup}>
               <Text style={styles.formLabel}>Date <Text style={styles.required}>*</Text></Text>
-              <View style={styles.dateInput}>
-                <TextInput
-                  style={styles.dateInputField}
-                  placeholder="Select movement date"
-                  placeholderTextColor={Colors.slate[500]}
-                  value={movementForm.date}
-                  onChangeText={(text) => setMovementForm({...movementForm, date: text})}
-                />
-                <Calendar size={20} color={Colors.slate[400]} />
-              </View>
+              <DatePicker
+                value={movementForm.date}
+                onDateChange={(date) => setMovementForm({...movementForm, date: date})}
+                placeholder="Select movement date"
+                minDate={new Date()} // Prevent selecting past dates
+              />
             </View>
 
             <View style={styles.formGroup}>
               <Text style={styles.formLabel}>Departure Time <Text style={styles.required}>*</Text></Text>
-              <View style={styles.timeInput}>
-                <Text style={styles.timeIcon}>🕐</Text>
-                <TextInput
-                  style={styles.timeInputField}
-                  placeholder="Select time"
-                  placeholderTextColor={Colors.slate[500]}
-                  value={movementForm.departureTime}
-                  onChangeText={(text) => setMovementForm({...movementForm, departureTime: text})}
-                />
-              </View>
+              <TimePicker
+                value={movementForm.departureTime}
+                onTimeChange={(time) => setMovementForm({...movementForm, departureTime: time})}
+                placeholder="Select departure time"
+              />
             </View>
 
             <View style={styles.formGroup}>
               <Text style={styles.formLabel}>Expected Return Time <Text style={styles.required}>*</Text></Text>
-              <View style={styles.timeInput}>
-                <Text style={styles.timeIcon}>🕐</Text>
-                <TextInput
-                  style={styles.timeInputField}
-                  placeholder="Select time"
-                  placeholderTextColor={Colors.slate[500]}
-                  value={movementForm.returnTime}
-                  onChangeText={(text) => setMovementForm({...movementForm, returnTime: text})}
-                />
-              </View>
+              <TimePicker
+                value={movementForm.returnTime}
+                onTimeChange={(time) => setMovementForm({...movementForm, returnTime: time})}
+                placeholder="Select return time"
+              />
             </View>
 
             <View style={styles.formGroup}>
@@ -640,26 +616,20 @@ export default function AttendanceScreen() {
           <View style={styles.modalContent}>
             <View style={styles.formGroup}>
               <Text style={styles.formLabel}>Clock In Time</Text>
-              <View style={styles.timeInput}>
-                <Text style={styles.timeIcon}>🕐</Text>
-                <TextInput
-                  style={styles.timeInputField}
-                  value={editForm.clockIn}
-                  onChangeText={(text) => setEditForm({...editForm, clockIn: text})}
-                />
-              </View>
+              <TimePicker
+                value={editForm.clockIn}
+                onTimeChange={(time) => setEditForm({...editForm, clockIn: time})}
+                placeholder="Select clock in time"
+              />
             </View>
 
             <View style={styles.formGroup}>
               <Text style={styles.formLabel}>Clock Out Time</Text>
-              <View style={styles.timeInput}>
-                <Text style={styles.timeIcon}>🕐</Text>
-                <TextInput
-                  style={styles.timeInputField}
-                  value={editForm.clockOut}
-                  onChangeText={(text) => setEditForm({...editForm, clockOut: text})}
-                />
-              </View>
+              <TimePicker
+                value={editForm.clockOut}
+                onTimeChange={(time) => setEditForm({...editForm, clockOut: time})}
+                placeholder="Select clock out time"
+              />
             </View>
           </View>
 

@@ -2,15 +2,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Download } from "lucide-react-native";
 import React, { useEffect, useState } from "react";
 import {
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    Alert,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
 } from "react-native";
 import { StatusPill } from "../components/StatusPill";
 import { Colors } from "../constants/Colors";
@@ -161,26 +160,20 @@ export default function LeaveScreen() {
               <View style={styles.dateGrid}>
                 <View style={styles.dateGroup}>
                   <Text style={styles.inputLabel}>From Date</Text>
-                  <TextInput
-                    style={styles.input}
+                  <DatePicker
                     value={formData.from}
-                    onChangeText={(val) =>
-                      setFormData({ ...formData, from: val })
-                    }
-                    placeholder="YYYY-MM-DD"
-                    placeholderTextColor={Colors.slate[500]}
+                    onDateChange={(date) => setFormData({ ...formData, from: date })}
+                    placeholder="Select from date"
+                    minDate={new Date()}
                   />
                 </View>
                 <View style={styles.dateGroup}>
                   <Text style={styles.inputLabel}>To Date</Text>
-                  <TextInput
-                    style={styles.input}
+                  <DatePicker
                     value={formData.to}
-                    onChangeText={(val) =>
-                      setFormData({ ...formData, to: val })
-                    }
-                    placeholder="YYYY-MM-DD"
-                    placeholderTextColor={Colors.slate[500]}
+                    onDateChange={(date) => setFormData({ ...formData, to: date })}
+                    placeholder="Select to date"
+                    minDate={formData.from ? new Date(formData.from) : new Date()}
                   />
                 </View>
               </View>

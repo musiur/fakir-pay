@@ -13,6 +13,12 @@ export interface Employee {
     casual: number;
   };
   biometricsEnabled: boolean;
+  medicalInfo: {
+    bloodGroup: string;
+    allergies: string;
+    insuranceId: string;
+    lastCheckup: string;
+  };
 }
 
 export interface KBDocument {
@@ -221,4 +227,14 @@ export interface RoutePoint {
   latitude: number;
   longitude: number;
   timestamp: Date;
+}
+export interface Issue {
+  id: string;
+  reporter: string;
+  department: string;
+  area: string;
+  description: string;
+  priority: "Low" | "Moderate" | "High";
+  status: "Open" | "Resolved";
+  reportedDate: string;
 }
