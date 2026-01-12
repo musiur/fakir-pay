@@ -1,26 +1,26 @@
 import {
-  AlertCircle,
-  CheckCircle,
-  Clock,
-  Download,
-  Flag,
-  Plus,
-  Search,
-  Share2,
-  X
+    AlertCircle,
+    CheckCircle,
+    Clock,
+    Download,
+    Flag,
+    Plus,
+    Search,
+    Share2,
+    X
 } from "lucide-react-native";
 import React, { useState } from "react";
 import {
-  Alert,
-  Linking,
-  Modal,
-  ScrollView,
-  Share,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View
+    Alert,
+    Linking,
+    Modal,
+    ScrollView,
+    Share,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
 } from "react-native";
 import { Colors } from "../../constants/Colors";
 import { KB_DOCS } from "../../constants/Data";
@@ -203,7 +203,7 @@ export default function KnowledgeBaseScreen() {
             style={[styles.tab, activeTab === "Documents" && styles.tabActive]}
             onPress={() => setActiveTab("Documents")}
           >
-            <Text style={[styles.tabText, activeTab === "Documents" && styles.tabTextActive]}>
+            <Text style={[styles.tabText, activeTab === "Documents" && styles.tabTextActive]} numberOfLines={1}>
               Documents
             </Text>
           </TouchableOpacity>
@@ -211,7 +211,7 @@ export default function KnowledgeBaseScreen() {
             style={[styles.tab, activeTab === "My Issues" && styles.tabActive]}
             onPress={() => setActiveTab("My Issues")}
           >
-            <Text style={[styles.tabText, activeTab === "My Issues" && styles.tabTextActive]}>
+            <Text style={[styles.tabText, activeTab === "My Issues" && styles.tabTextActive]} numberOfLines={1}>
               My Issues
             </Text>
           </TouchableOpacity>
@@ -642,24 +642,32 @@ const styles = StyleSheet.create({
   tabs: {
     flexDirection: "row",
     paddingHorizontal: 16,
+    backgroundColor: Colors.neutral[900],
+    borderRadius: 8,
+    margin: 16,
+    padding: 4,
   },
   tab: {
     flex: 1,
-    paddingVertical: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    borderRadius: 6,
     alignItems: "center",
-    borderBottomWidth: 2,
-    borderBottomColor: "transparent",
+    justifyContent: "center",
+    minHeight: 44,
   },
   tabActive: {
-    borderBottomColor: Colors.brand.light,
+    backgroundColor: Colors.brand.light,
   },
   tabText: {
     color: Colors.slate[400],
-    fontSize: 16,
+    fontSize: 13,
     fontWeight: "500",
+    textAlign: "center",
+    lineHeight: 15,
   },
   tabTextActive: {
-    color: Colors.brand.light,
+    color: Colors.neutral[900],
     fontWeight: "600",
   },
   searchContainer: {

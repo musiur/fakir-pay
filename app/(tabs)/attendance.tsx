@@ -1,5 +1,6 @@
+import { useRouter } from "expo-router";
 import {
-  Calendar,
+  CalendarDays,
   Edit,
   FileText,
   Fingerprint,
@@ -47,7 +48,19 @@ interface MovementRequest {
   submittedDate: string;
 }
 
+interface LeaveRequest {
+  id: string;
+  type: string;
+  from: string;
+  to: string;
+  status: "approved" | "pending" | "rejected";
+  submittedDate: string;
+  approvedBy?: string;
+  reason?: string;
+}
+
 export default function AttendanceScreen() {
+  const router = useRouter();
   const [step, setStep] = useState<"zone" | "biometric" | "success">("zone");
   const [geofenceOk, setGeofenceOk] = useState(true);
   const [clocked, setClocked] = useState(false);
@@ -58,7 +71,7 @@ export default function AttendanceScreen() {
   const [showQSModal, setShowQSModal] = useState(false);
   const [showMovementModal, setShowMovementModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [requestTab, setRequestTab] = useState<"qs" | "movement">("movement");
+  const [requestTab, setRequestTab] = useState<"qs" | "movement" | "leaves">("movement");
   
   // Form states
   const [qsForm, setQSForm] = useState({
@@ -132,6 +145,48 @@ export default function AttendanceScreen() {
       purpose: "Quality inspection and delivery coordination",
       status: "Completed",
       submittedDate: "2025-11-30"
+    }
+  ]);
+
+  const [leaveRequests] = useState<LeaveRequest[]>([
+    {
+      id: "LV-301",
+      type: "Annual",
+      from: "2025-12-20",
+      to: "2025-12-22",
+      status: "approved",
+      submittedDate: "2025-11-15",
+      approvedBy: "Manager on 2025-11-16",
+      reason: "Family vacation during winter holidays"
+    },
+    {
+      id: "LV-298",
+      type: "Sick",
+      from: "2025-11-25",
+      to: "2025-11-26",
+      status: "approved",
+      submittedDate: "2025-11-25",
+      approvedBy: "HR on 2025-11-25",
+      reason: "Medical appointment and recovery"
+    },
+    {
+      id: "LV-285",
+      type: "Casual",
+      from: "2025-12-05",
+      to: "2025-12-05",
+      status: "pending",
+      submittedDate: "2025-12-01",
+      reason: "Personal urgent matter"
+    },
+    {
+      id: "LV-280",
+      type: "Annual",
+      from: "2025-11-10",
+      to: "2025-11-12",
+      status: "approved",
+      submittedDate: "2025-10-25",
+      approvedBy: "Manager on 2025-10-26",
+      reason: "Wedding ceremony attendance"
     }
   ]);
 
@@ -281,9 +336,12 @@ export default function AttendanceScreen() {
 
       {/* Quick Action Buttons */}
       <View style={styles.quickActions}>
-        <TouchableOpacity style={styles.quickActionButton}>
-          <Calendar size={24} color={Colors.brand.light} />
-          <Text style={styles.quickActionText}>Calendar</Text>
+        <TouchableOpacity 
+          style={styles.quickActionButton}
+          onPress={() => router.push("/leave")}
+        >
+          <CalendarDays size={24} color={Colors.brand.light} />
+          <Text style={styles.quickActionText}>Leaves</Text>
         </TouchableOpacity>
         
         <TouchableOpacity 
@@ -363,8 +421,8 @@ export default function AttendanceScreen() {
               <Text style={[
                 styles.tabText,
                 requestTab === "qs" && styles.activeTabText
-              ]}>
-                QS Attendance
+              ]} numberOfLines={1}>
+                QS
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -377,8 +435,22 @@ export default function AttendanceScreen() {
               <Text style={[
                 styles.tabText,
                 requestTab === "movement" && styles.activeTabText
-              ]}>
-                Movement Register
+              ]} numberOfLines={1}>
+                Movement
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.tab,
+                requestTab === "leaves" && styles.activeTab
+              ]}
+              onPress={() => setRequestTab("leaves")}
+            >
+              <Text style={[
+                styles.tabText,
+                requestTab === "leaves" && styles.activeTabText
+              ]} numberOfLines={1}>
+                Leaves
               </Text>
             </TouchableOpacity>
           </View>
@@ -402,7 +474,7 @@ export default function AttendanceScreen() {
                   </View>
                 ))}
               </View>
-            ) : (
+            ) : requestTab === "movement" ? (
               <View style={styles.requestsList}>
                 {movementRequests.map((request) => (
                   <View key={request.id} style={styles.requestCard}>
@@ -418,6 +490,27 @@ export default function AttendanceScreen() {
                     <Text style={styles.requestLabel}>Destination: <Text style={styles.requestValue}>{request.destination}</Text></Text>
                     <Text style={styles.requestReason}>{request.purpose}</Text>
                     <Text style={styles.requestSubmitted}>Submitted: {request.submittedDate}</Text>
+                  </View>
+                ))}
+              </View>
+            ) : (
+              <View style={styles.requestsList}>
+                {leaveRequests.map((request) => (
+                  <View key={request.id} style={styles.requestCard}>
+                    <View style={styles.requestHeader}>
+                      <Text style={styles.requestId}>{request.id}</Text>
+                      <StatusPill status={request.status.toLowerCase()} />
+                    </View>
+                    <Text style={styles.requestLabel}>Type: <Text style={styles.requestValue}>{request.type}</Text></Text>
+                    <Text style={styles.requestLabel}>From: <Text style={styles.requestValue}>{request.from}</Text></Text>
+                    <Text style={styles.requestLabel}>To: <Text style={styles.requestValue}>{request.to}</Text></Text>
+                    {request.reason && (
+                      <Text style={styles.requestReason}>{request.reason}</Text>
+                    )}
+                    <Text style={styles.requestSubmitted}>Submitted: {request.submittedDate}</Text>
+                    {request.approvedBy && (
+                      <Text style={styles.requestApproved}>Approved by: {request.approvedBy}</Text>
+                    )}
                   </View>
                 ))}
               </View>
@@ -660,7 +753,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.neutral[950],
   },
   content: {
-    padding: 20,
+    padding: 4,
     gap: 20,
     paddingBottom: 40,
   },
@@ -806,7 +899,7 @@ const styles = StyleSheet.create({
   },
   quickActionText: {
     color: Colors.slate[300],
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: "500",
   },
   historyCard: {
@@ -889,25 +982,29 @@ const styles = StyleSheet.create({
   tabContainer: {
     flexDirection: "row",
     backgroundColor: Colors.neutral[900],
-    margin: 20,
+    margin: 4,
     marginBottom: 0,
     borderRadius: 12,
-    padding: 4,
+    padding: 2,
   },
   tab: {
     flex: 1,
     paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingHorizontal: 4,
     borderRadius: 8,
     alignItems: "center",
+    justifyContent: "center",
+    minHeight: 44,
   },
   activeTab: {
     backgroundColor: Colors.brand.light,
   },
   tabText: {
     color: Colors.slate[400],
-    fontSize: 14,
+    fontSize: 11,
     fontWeight: "500",
+    textAlign: "center",
+    lineHeight: 13,
   },
   activeTabText: {
     color: Colors.neutral[900],

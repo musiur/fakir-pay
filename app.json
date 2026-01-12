@@ -59,8 +59,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "1411630d-844c-4db1-9f58-69f34f43a1fd"
+        "projectId": "33c6f2d4-bf6a-4c05-8abf-2dced3ee29c1"
       }
-    }
+    },
+    "owner": "musiur"
   }
 }

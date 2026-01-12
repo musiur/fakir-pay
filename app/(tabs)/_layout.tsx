@@ -1,24 +1,35 @@
-import { Tabs } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 import {
-    Bell,
-    Book,
-    Clock,
-    FileText,
-    Home,
-    MessageSquare,
-    User,
+  Bell,
+  Book,
+  Clock,
+  FileText,
+  Home,
+  MessageSquare,
+  User,
 } from "lucide-react-native";
 import React from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
+import { Logo } from "../../components/Logo";
 import { NotificationBadge } from "../../components/NotificationBadge";
 import { Colors } from "../../constants/Colors";
 import { useNotifications } from "../../hooks/useNotifications";
 
 export default function TabsLayout() {
   const { unreadCount } = useNotifications();
+  const router = useRouter();
+
+  const LogoComponent = () => (
+    <View style={{ marginLeft: -24 }}>
+      <Logo size="large" />
+    </View>
+  );
 
   const NotificationButton = () => (
-    <TouchableOpacity style={{ position: 'relative', marginRight: 16 }}>
+    <TouchableOpacity 
+      style={{ position: 'relative', marginRight: 16 }}
+      onPress={() => router.push("/notifications")}
+    >
       <Bell size={24} color={Colors.slate[200]} />
       <NotificationBadge count={unreadCount} />
     </TouchableOpacity>
@@ -56,7 +67,8 @@ export default function TabsLayout() {
         name="index"
         options={{
           title: "Home",
-          headerTitle: "FakirPay Dashboard",
+          headerTitle: "",
+          headerLeft: () => <LogoComponent />,
           headerRight: () => <NotificationButton />,
           tabBarIcon: ({ color, size }) => <Home size={size} color={color} />,
         }}
@@ -72,6 +84,9 @@ export default function TabsLayout() {
         name="ai"
         options={{
           title: "ask FFL",
+          headerTitle: "",
+          headerLeft: () => <LogoComponent />,
+          headerRight: () => <NotificationButton />,
           tabBarIcon: ({ color, size }) => (
             <MessageSquare size={size} color={color} />
           ),

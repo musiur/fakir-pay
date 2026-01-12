@@ -2,14 +2,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Fingerprint, Plus, Upload, User, Users, X } from "lucide-react-native";
 import React, { useEffect, useState } from "react";
 import {
-    Alert,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
+  Alert,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from "react-native";
 import DatePicker from "../../components/DatePicker";
 import { Colors } from "../../constants/Colors";
@@ -302,7 +302,7 @@ export default function ESignScreen() {
               style={[styles.tab, activeTab === tab && styles.tabActive]}
               onPress={() => setActiveTab(tab)}
             >
-              <Text style={[styles.tabText, activeTab === tab && styles.tabTextActive]}>
+              <Text style={[styles.tabText, activeTab === tab && styles.tabTextActive]} numberOfLines={1}>
                 {tab}
               </Text>
             </TouchableOpacity>
@@ -772,26 +772,32 @@ const styles = StyleSheet.create({
   tabs: {
     flexDirection: "row",
     flex: 1,
-    gap: 8,
+    backgroundColor: Colors.neutral[900],
+    borderRadius: 8,
+    padding: 4,
+    marginRight: 12,
   },
   tab: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: Colors.neutral[700],
+    flex: 1,
+    paddingHorizontal: 8,
+    paddingVertical: 10,
+    borderRadius: 6,
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 40,
   },
   tabActive: {
-    backgroundColor: Colors.brand.light + "22",
-    borderColor: Colors.brand.light,
+    backgroundColor: Colors.brand.light,
   },
   tabText: {
-    color: Colors.slate[300],
-    fontSize: 13,
+    color: Colors.slate[400],
+    fontSize: 12,
     fontWeight: "500",
+    textAlign: "center",
+    lineHeight: 14,
   },
   tabTextActive: {
-    color: Colors.brand.light,
+    color: Colors.neutral[900],
     fontWeight: "600",
   },
   addButton: {

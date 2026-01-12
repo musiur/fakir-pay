@@ -23,7 +23,17 @@ export default function RootLayout() {
             headerShown: true,
             headerStyle: { backgroundColor: Colors.neutral[950] },
             headerTintColor: Colors.slate[200],
-            title: "Leave & Payroll",
+            title: "Leave",
+          }}
+        />
+        <Stack.Screen
+          name="payroll"
+          options={{
+            presentation: "modal",
+            headerShown: true,
+            headerStyle: { backgroundColor: Colors.neutral[950] },
+            headerTintColor: Colors.slate[200],
+            title: "Payroll",
           }}
         />
         <Stack.Screen
@@ -34,6 +44,16 @@ export default function RootLayout() {
             headerStyle: { backgroundColor: Colors.neutral[950] },
             headerTintColor: Colors.slate[200],
             title: "Complaints & Grievances",
+          }}
+        />
+        <Stack.Screen
+          name="notifications"
+          options={{
+            presentation: "modal",
+            headerShown: true,
+            headerStyle: { backgroundColor: Colors.neutral[950] },
+            headerTintColor: Colors.slate[200],
+            title: "Notifications",
           }}
         />
       </Stack>

@@ -103,6 +103,13 @@ export interface ChatMessage {
     docId: string;
     heading: string;
   };
+  source?: string;
+  actions?: {
+    type: string;
+    label: string;
+    icon: string;
+    params?: any;
+  }[];
 }
 
 export interface ChatThread {

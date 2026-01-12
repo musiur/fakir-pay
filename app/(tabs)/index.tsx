@@ -74,7 +74,7 @@ export default function DashboardScreen() {
             icon={CreditCard}
             title="Payroll"
             caption="Payslips"
-            onPress={() => router.push("/leave")}
+            onPress={() => router.push("/payroll")}
           />
         </View>
         <View style={styles.gridRow}>
